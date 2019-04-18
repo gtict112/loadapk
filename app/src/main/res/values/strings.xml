@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">FloatProject</string>
+    <string name="plugin_title">插 件 功 能</string>
+    <string name="plugin_chat_set">设置喊话内容</string>
+    <string name="plugin_chat_save">保 存</string>
+    <string name="plugin_chat_clear">清 空</string>
+    <string name="plugin_chat_time">间隔时间</string>
+    <string name="plugin_chat_time_current">1</string>
+
+
+    <string name="plugin_swap_set">扫货出货设置</string>
+    <string name="plugin_swap_time">扫货间隔: </string>
+    <string name="plugin_swap_time_current">40毫秒</string>
+    <string name="plugin_swap_price_range">价格范围: </string>
+    <string name="plugin_swap_midline">  -----  </string>
+    <string name="plugin_swap_save">保 存</string>
+    <string name="plugin_swap_cancel">取 消</string>
+    <string name="plugin_swap_tip">扫货设置:</string>
+    <string name="plugin_swap_sale_tip">出货设置:</string>
+    <string name="plugin_swap_sale_price">出货价格: </string>
+    <string name="plugin_swap_sale_num">出货数量: </string>
+    <string name="plugin_swap_sale_descripe">(1, 例出货数量设置为500, 则表示当数量超过500时，以设置的出货价格，上架500个到拍卖行)\n(2, 扫货间隔时间建议大于40毫秒, 低于40毫秒易掉线)</string>
+</resources>

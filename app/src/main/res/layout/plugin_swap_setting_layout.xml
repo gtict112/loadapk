@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/general_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/Bottombar_bg"
+        android:gravity="center"
+        android:text="@string/plugin_swap_set"
+        android:textColor="@color/bg_danmu_title"
+        android:textSize="25dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/plugin_swap_tip"
+                android:textColor="@color/Red"
+                android:textSize="18dp" />
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5px"
+                android:layout_marginBottom="10dp"
+                android:background="@color/Blue" />
+
+            <!-- 扫货时间间隔 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/plugin_swap_time"
+                    android:textColor="@color/Blue2"
+                    android:textSize="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/id_plugin_swap_time_seekbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:min="1" />
+
+                    <TextView
+                        android:id="@+id/id_plugin_swap_time_current"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:gravity="center"
+                        android:text="@string/plugin_swap_time_current"
+                        android:textColor="@color/Blue2"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 扫货价格区间 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_plugin_swap_price_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:gravity="center"
+                    android:text="@string/plugin_swap_price_range"
+                    android:textColor="@color/Blue2"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/id_plugin_swap_edit_minprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plugin_swap_midline" />
+
+                <EditText
+                    android:id="@+id/id_plugin_swap_edit_maxprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <!-- 出货设置提示 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/plugin_swap_sale_tip"
+                android:textColor="@color/Red"
+                android:textSize="18dp" />
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5px"
+                android:layout_marginBottom="10dp"
+                android:background="@color/Blue" />
+
+            <!-- 出货设置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/plugin_swap_sale_price"
+                    android:textColor="@color/Blue2"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/id_plugin_swap_sale_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="@string/plugin_swap_sale_num"
+                    android:textColor="@color/Blue2"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/id_plugin_swap_sale_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:width="100dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/plugin_swap_sale_descripe"
+                android:textColor="@color/Red"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        <!-- 保存-取消 按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_plugin_swap_save"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_dialog_bottom_left_btn"
+                android:gravity="center"
+                android:text="@string/plugin_swap_save"
+                android:textColor="@color/Blue2"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/id_plugin_swap_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_dialog_bottom_right_btn"
+                android:gravity="center"
+                android:text="@string/plugin_swap_cancel"
+                android:textColor="@color/Blue2"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
