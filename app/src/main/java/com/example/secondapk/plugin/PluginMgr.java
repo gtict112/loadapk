@@ -26,11 +26,10 @@ public class PluginMgr {
     public Context context;
 
     public static void init(Context app, String workDir) {
-        Log.d( "dddddd", "init: " + workDir + " " + app );
+
         activity = (Activity) app;
         sApp = activity.getApplicationContext();
         sWorkDir = workDir;
-        Log.d( "dddddd", "init:2 " );
         ShowView();
     }
 

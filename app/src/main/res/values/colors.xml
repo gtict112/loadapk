@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="slidingmenu_offset">200dp</dimen>
+    <dimen name="shadow_width">5dp</dimen>
     <color name="About_Text_Color">#ff0066ff</color>
     <color name="Bg_Tittle">#ff2c2935</color>
     <color name="Black">#ff000000</color>

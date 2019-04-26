@@ -207,8 +207,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_dialog_bottom_left_btn"
                 android:gravity="center"
-                android:text="@string/plugin_swap_save"
-                android:textColor="@color/Blue2"
                 android:textSize="18dp" />
 
             <TextView
