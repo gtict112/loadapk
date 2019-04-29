@@ -10,12 +10,12 @@
         android:layout_marginLeft="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginRight="1dp"
-        android:layout_weight="5"
-        android:background="@color/Bottombar_bg"
+        android:layout_weight="7"
+        android:background="#bbffee"
         android:gravity="center"
         android:text="@string/plugin_title"
-        android:textColor="@color/bg_danmu_title"
-        android:textSize="30dp" />
+        android:textColor="@color/orange"
+        android:textSize="25dp" />
 
     <ListView
         android:id="@+id/id_plugin_list_view"
@@ -25,6 +25,6 @@
         android:layout_marginTop="5dp"
         android:layout_weight="1"
         android:background="@color/general_background"
-        android:dividerHeight="3dp"></ListView>
+        android:dividerHeight="4dp"></ListView>
 
 </LinearLayout>

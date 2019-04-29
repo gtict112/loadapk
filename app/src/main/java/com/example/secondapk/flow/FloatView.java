@@ -119,7 +119,8 @@ public class FloatView implements IFloatUI, OnClickListener {
     /**
      * float menu的高度
      */
-    private int viewHeight = 50;
+    private int viewHeight = 30; //
+    private int viewHeight2 =20;
 
     public FloatView(Activity activity, String workDir) {
         this.mActivity = activity;
@@ -300,21 +301,21 @@ public class FloatView implements IFloatUI, OnClickListener {
 
         rightIconIV = popMainView.findViewById( R.id.float_menu_right_iv );
         leftIconIV = popMainView.findViewById( R.id.float_menu_left_iv );
-        /*个人中心*/
-        TextView personalCenterTV = popMainView.findViewById( R.id.float_menu_personal_tv );
-        /*礼包*/
-        TextView giftTV = popMainView.findViewById( R.id.float_menu_gifts_tv );
-        /*消息*/
-        TextView noticeTV = popMainView.findViewById( R.id.xygame_float_menu_msg_tv );
-        /*帮助*/
-        TextView helpTV = popMainView.findViewById( R.id.float_menu_help_tv );
+//        /*个人中心*/
+//        TextView personalCenterTV = popMainView.findViewById( R.id.float_menu_personal_tv );
+//        /*礼包*/
+//        TextView giftTV = popMainView.findViewById( R.id.float_menu_gifts_tv );
+//        /*消息*/
+//        TextView noticeTV = popMainView.findViewById( R.id.xygame_float_menu_msg_tv );
+//        /*帮助*/
+//        TextView helpTV = popMainView.findViewById( R.id.float_menu_help_tv );
 
         rightIconIV.setOnClickListener( this );
         leftIconIV.setOnClickListener( this );
-        personalCenterTV.setOnClickListener( this );
-        giftTV.setOnClickListener( this );
-        noticeTV.setOnClickListener( this );
-        helpTV.setOnClickListener( this );
+//        personalCenterTV.setOnClickListener( this );
+//        giftTV.setOnClickListener( this );
+//        noticeTV.setOnClickListener( this );
+//        helpTV.setOnClickListener( this );
     }
 
     @Override
@@ -328,7 +329,7 @@ public class FloatView implements IFloatUI, OnClickListener {
     private void initMenu() {
         if (mPopupWindow == null && floatIV != null) {
             mPopupWindow = new PopupWindow( popMainView, LayoutParams.WRAP_CONTENT,
-                    viewHeight, true );
+                    viewHeight2, true );
             mPopupWindow.setFocusable( true );
             mPopupWindow.setOutsideTouchable( true );
             mPopupWindow.setBackgroundDrawable( new BitmapDrawable() );

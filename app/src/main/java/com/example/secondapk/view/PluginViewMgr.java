@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,9 @@ import com.example.secondapk.R;
 import com.example.secondapk.flow.ResourceMgr;
 import com.example.secondapk.plugin.LogMgr;
 import com.example.secondapk.plugin.PluginMgr;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,6 +52,7 @@ public class PluginViewMgr {
     private static PopupWindow sPopSwapSetting = null;
     private static int sTmpTimes = -1;
     private static int sSwpTimes = 40;
+    public static IWXAPI api;
 
     public static void init(Activity activity, String workDir) {
         sActivity = activity;
@@ -159,6 +164,18 @@ public class PluginViewMgr {
         }
     }
 
+    public static void   loadjswxtest(String appId,String miniProgramId,String path)
+    {
+        Log.e( "r", "path: "+path );
+        api = WXAPIFactory.createWXAPI(sActivity, appId, true);
+        api.registerApp(appId);
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = miniProgramId;
+
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
+        api.sendReq(req);
+    }
+
     // 创建插件子主视图
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static View CreatePluginItemView(final PluginItemInfo itemInfo) {
@@ -171,8 +188,9 @@ public class PluginViewMgr {
             itemNameView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShowPluginHHSettingView();
-                    sPopWindow.dismiss();
+//                    ShowPluginHHSettingView();
+//                    sPopWindow.dismiss();
+                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
                 }
             } );
         }
@@ -182,8 +200,10 @@ public class PluginViewMgr {
             itemNameView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShowPluginSwapSettingView();
-                    sPopWindow.dismiss();
+
+                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
+//                    ShowPluginSwapSettingView();
+//                    sPopWindow.dismiss();
                 }
             } );
         }
@@ -430,7 +450,7 @@ public class PluginViewMgr {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY );
 
         if (sPopWindow == null) {
-            sPopWindow = new PopupWindow( pluginView, outMetrics.widthPixels / 4 * 3, outMetrics.heightPixels / 8 * 7 );
+            sPopWindow = new PopupWindow( pluginView, outMetrics.widthPixels / 10 * 7, outMetrics.heightPixels / 4 * 3 );
         } else {
             sPopWindow.setContentView( pluginView );
         }
