@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.devices.tools.tools;
 import com.example.secondapk.R;
 import com.example.secondapk.flow.ResourceMgr;
 import com.example.secondapk.plugin.LogMgr;
@@ -164,17 +165,9 @@ public class PluginViewMgr {
         }
     }
 
-    public static void   loadjswxtest(String appId,String miniProgramId,String path)
-    {
-        Log.e( "r", "path: "+path );
-        api = WXAPIFactory.createWXAPI(sActivity, appId, true);
-        api.registerApp(appId);
-        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-        req.userName = miniProgramId;
 
-        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-        api.sendReq(req);
-    }
+
+
 
     // 创建插件子主视图
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -190,7 +183,7 @@ public class PluginViewMgr {
                 public void onClick(View view) {
 //                    ShowPluginHHSettingView();
 //                    sPopWindow.dismiss();
-                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
+//                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
                 }
             } );
         }
@@ -201,7 +194,7 @@ public class PluginViewMgr {
                 @Override
                 public void onClick(View view) {
 
-                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
+//                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
 //                    ShowPluginSwapSettingView();
 //                    sPopWindow.dismiss();
                 }

@@ -2,6 +2,8 @@ package com.example.secondapk.view;
 
 import android.view.View;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class PluginInfo {
     private View pluginView = null;
     private View pluginHHSetingView = null;
     private List<PluginItemInfo> itemList = new ArrayList<PluginItemInfo>();
+
     private PluginChatInfo chatInfo = new PluginChatInfo();
     private SwapSetting swapSetting = new SwapSetting();
 
@@ -50,6 +53,7 @@ public class PluginInfo {
     public void AddPluginItem(PluginItemInfo itemInfo) {
         itemList.add( itemInfo );
     }
+
 
     public View getPluginView() {
         return pluginView;
