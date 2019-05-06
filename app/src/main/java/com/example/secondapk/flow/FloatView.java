@@ -176,7 +176,7 @@ public class FloatView implements IFloatUI, OnClickListener {
     }
 
     private void initTimer() {
-        length = viewHeight / 2;    //隐藏一半
+        length = viewHeight / 3;    //隐藏一半
         mHideTimer = new CountDownTimer( 2000, 2000 ) {        //悬浮窗超过5秒没有操作的话会自动隐藏
             @Override
             public void onTick(long millisUntilFinished) {
