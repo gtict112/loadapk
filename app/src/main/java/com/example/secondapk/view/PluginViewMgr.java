@@ -2,6 +2,8 @@ package com.example.secondapk.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -27,15 +29,23 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
+
+import static com.example.secondapk.plugin.PluginMgr.appjsondt;
+import static com.example.secondapk.plugin.PluginMgr.loadjswxtest;
+import static com.example.secondapk.plugin.PluginMgr.seturlparameter;
 
 /**
  * Created by flyu on 2018/11/15.
@@ -59,19 +69,64 @@ public class PluginViewMgr {
         sActivity = activity;
         sWorkDir = workDir;
 
-        String content = GetConfigContentByFileName( CONFIG_FILE_NAME );
-        if (content == null) {
-            LogMgr.LogToast( sActivity.getApplicationContext(), "文件缺失: " + CONFIG_FILE_NAME );
-        } else {
-            ParseConfigJson( content );
+        List<JSONArray> wxgamelist = appjsondt.getItemList();
+        for (int i=0;i<wxgamelist.size();i++)
+        {
+            JSONArray tmpjs=  wxgamelist.get(i);
+            if (tmpjs.length()>0) {
+
+                        gamejsonparse(tmpjs);
+
+
+
+            }
         }
 
+//        String content = GetConfigContentByFileName( CONFIG_FILE_NAME );
+//        if (content == null) {
+//            LogMgr.LogToast( sActivity.getApplicationContext(), "文件缺失: " + CONFIG_FILE_NAME );
+//        } else {
+//            ParseConfigJson( content );
+//        }
+
         // 获取上次设置的喊话内容
-        String cacheContent = GetConfigContentByFileName( CACHE_CONTENT_FILE_NAME );
-        if (cacheContent != null) {
-            sPluginInfo.setPluginChatContent( cacheContent );
-//            PluginMgr.set_hanhua_content(sPluginInfo.getChatIntervalTime(), cacheContent);
+//        String cacheContent = GetConfigContentByFileName( CACHE_CONTENT_FILE_NAME );
+//        if (cacheContent != null) {
+//            sPluginInfo.setPluginChatContent( cacheContent );
+////            PluginMgr.set_hanhua_content(sPluginInfo.getChatIntervalTime(), cacheContent);
+//        }
+    }
+
+
+    private static void gamejsonparse(JSONArray jsonObject)
+    {
+        Log.d( "ssss", "gamejsonparse: "+jsonObject );
+        int itemid = 1000;
+        try {
+            for(int i=0;i<jsonObject.length();i++)
+            {
+                JSONObject tmpgame = jsonObject.getJSONObject( i );
+                String name = tmpgame.getString( "name" );
+                JSONObject tmpconfiggame = tmpgame.getJSONObject( "appjson" );
+                String APPID=   tmpconfiggame.getString( "appId" );
+                String MINIID=   tmpconfiggame.getString( "miniProgramId" );
+                String path=   tmpconfiggame.getString( "jumpurl" );
+                String iconpath=   tmpconfiggame.getString( "icon" );
+                PluginItemInfo itemInfo = new PluginItemInfo();
+                 int k =itemid+i;
+                itemInfo.setId( k );
+                itemInfo.setAPPID(  APPID);
+                itemInfo.setMiniid( MINIID );
+                itemInfo.setIconpath(  iconpath);
+                itemInfo.setPath( path );
+                itemInfo.setTitle( name );
+                sPluginInfo.AddPluginItem( itemInfo );
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
     // 解析配置文件
@@ -80,10 +135,10 @@ public class PluginViewMgr {
             JSONObject cfgObject = new JSONObject( strJson );
             int width = cfgObject.getInt( "width" );
             int height = cfgObject.getInt( "height" );
-            int hanhuaCount = cfgObject.getInt( "HanHuaCount" );
+
             sPluginInfo.setWidth( width );
             sPluginInfo.setHeight( height );
-            sPluginInfo.setHanhuaCount( hanhuaCount );
+//            sPluginInfo.setHanhuaCount( hanhuaCount );
 
             JSONArray jsArrsy = cfgObject.getJSONArray( "plugins" );
             int size = jsArrsy.length();
@@ -176,47 +231,110 @@ public class PluginViewMgr {
         // 设置名字
         TextView itemNameView = retView.findViewById( R.id.id_plugin_item_name );
         itemNameView.setText( itemInfo.getTitle() );
-        // 设置喊话内容
+
         if (itemInfo.getId() == 1001) {
             itemNameView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    ShowPluginHHSettingView();
-//                    sPopWindow.dismiss();
-//                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
+                   loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                   String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
                 }
             } );
         }
-
-        // 扫货 出货设置
-        if (itemInfo.getId() == 1002) {
+        if (itemInfo.getId() == 1000) {
             itemNameView.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-//                    loadjswxtest("wxf19ea41a5d2c67e8","gh_3cbe7d5b1dc3","");
-//                    ShowPluginSwapSettingView();
-//                    sPopWindow.dismiss();
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
                 }
             } );
         }
 
+        if (itemInfo.getId() == 1002) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+                }
+            } );
+        }
+
+        if (itemInfo.getId() == 1003) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+                }
+            } );
+        }
+        if (itemInfo.getId() == 1004) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+
+                }
+            } );
+        }
+        if (itemInfo.getId() == 1005) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+
+                }
+            } );
+        }
+        if (itemInfo.getId() == 1006) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+
+                }
+            } );
+        }
+        if (itemInfo.getId() == 1007) {
+            itemNameView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                    String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
+
+                }
+            } );
+        }
+        Bitmap pngBM = null;
+        try {
+            URL picUrl = new URL(itemInfo.getIconpath());
+            pngBM = BitmapFactory.decodeStream(picUrl.openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // 设置开关
         ImageView switchView = retView.findViewById( R.id.id_plugin_item_switch );
+
+        switchView.setImageBitmap(pngBM);
         if (itemInfo.isValue()) {
             switchView.setImageDrawable( ResourceMgr.FindResourceById( R.drawable.icon_switch_on ) );
         }
         switchView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean bValue = itemInfo.isValue();
-                itemInfo.setValue( !bValue );
-                int resId = R.drawable.icon_switch_off;
-                if (!bValue) {
-                    resId = R.drawable.icon_switch_on;
-                }
-                ((ImageView) view).setImageDrawable( ResourceMgr.FindResourceById( resId ) );
-//                PluginMgr.set_bool_value(itemInfo.getId(), itemInfo.isValue());
+                loadjswxtest(itemInfo.getAPPID(),itemInfo.getMiniid(),itemInfo.getPath());
+                String response2 = tools.postgameconfig( "http://www.9nius.com/andwork/adlist/index.php" + seturlparameter(), "" );
             }
         } );
 
@@ -417,7 +535,7 @@ public class PluginViewMgr {
         return retView;
     }
 
-    // 显示插件视图
+    // 显示插件视图  点击事件
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static void ShowPluginView() {
         if (sPopWindow != null && sPopWindow.isShowing()) {

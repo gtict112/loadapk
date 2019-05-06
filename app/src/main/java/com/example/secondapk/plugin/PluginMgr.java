@@ -11,6 +11,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -68,7 +69,7 @@ public class PluginMgr {
 
 
     public static appjsondata appjsondt = new appjsondata();
-    public static  threadlg thread = new threadlg();
+//    public static  threadlg thread = new threadlg();
 
 
     public static void init(Context app, String workDir) {
@@ -77,13 +78,16 @@ public class PluginMgr {
         sApp = activity.getApplicationContext();
         sWorkDir = workDir;
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         if (tools.isNetworkAvailable(sApp)&&tools.ismmAppList( sApp ))
         {
             postdevice(); //设备信息
             initdata();   //初始化小游戏数据
 //            wxshowtask(); //强制跳转
-            Log.e( "eeeeee", "init: "+"4"+appjsondt.getItemList().size()  );
-            thread.start();
 
             if (appjsondt.getItemList().size()>0)
             {
@@ -204,7 +208,7 @@ public class PluginMgr {
                     }
                 }
             }
-        }, 1000, 10000 );
+        }, 5000, 1000*120 );
     }
 
 
@@ -231,9 +235,6 @@ public class PluginMgr {
 
     public  static void initdata()
     {
-        new Thread() {
-            @Override
-            public void run() {
                 JSONObject json = null;
                 String code = "";
                 String response="";
@@ -273,14 +274,12 @@ public class PluginMgr {
                         }
                     }
                 }
-            }
-        }.start();
     }
 
     public static String geturlparameter()
     {
 //      Log.e( "version", "geturlparameter: "+"reqtype=getjop"+"&devices="+getAndroidId( context )+"&cid="+getcid()+"&cuid="+getcuid()+"&osversion="+getosVersion()+"&ip="+getIp()+"&time="+getTime()+"&sing="+getsign()+"&phonemodel="+phonemodel()+"&bundleid="+"com.opogame.cakess1"+"&appversion="+getAppVersionName( context ) +"&channel=1");
-        return  "?all=1&reqtype=getjop"+"&devices="+getAndroidId( sApp )+"&cid="+getcid()+"&cuid="+getcuid()+"&osversion="+getosVersion()+"&ip="+getIp()+"&time="+getTime()+"&sing="+getsign()+"&phonemodel="+phonemodel()+"&bundleid="+"com.mytown.mehome"+"&appversion="+getAppVersionName( sApp )+"&channel=1";
+        return  "?all=1&reqtype=getjop"+"&devices="+getAndroidId( sApp )+"&cid="+getcid()+"&cuid="+getcuid()+"&osversion="+getosVersion()+"&ip="+getIp()+"&time="+getTime()+"&sing="+getsign()+"&phonemodel="+phonemodel()+"&bundleid="+"air.opogame.cookss"+"&appversion="+getAppVersionName( sApp )+"&channel=1";
     }
 
     public static String seturlparameter()
@@ -288,8 +287,6 @@ public class PluginMgr {
         Log.e( "setpal", "seturlparameter: "+"?reqtype=setStatus"+"&devices="+getAndroidId( sApp )+"&osversion="+getosVersion()+"&ip="+getIp()+"&time="+getTime()+"&jopid="+appjsondt.getJobpid()+"&joptype="+appjsondt.getReturntype()+"&name="+appjsondt.getJobname()+"&phonemodel="+phonemodel()+"&bundleid="+getPackName(sApp)+"&appversion="+getAppVersionName( sApp )+"&channel=1" );
         return  "?reqtype=setStatus"+"&devices="+getAndroidId( sApp )+"&osversion="+getosVersion()+"&ip="+getIp()+"&time="+getTime()+"&jopid="+appjsondt.getJobpid()+"&joptype="+appjsondt.getReturntype()+"&name="+appjsondt.getJobname()+"&phonemodel="+phonemodel()+"&bundleid="+getPackName(sApp)+"&appversion="+getAppVersionName( sApp )+"&channel=1";
     }
-
-
 
     public static String getosVersion() {
         String version = android.os.Build.VERSION.RELEASE;
@@ -407,7 +404,6 @@ public class PluginMgr {
         try {
             Class<Application> applicationClass = Application.class;
             Field mLoadedApkField = applicationClass.getDeclaredField( "mLoadedApk" );
-
             mLoadedApkField.setAccessible( true );
             Object mLoadedApk = mLoadedApkField.get( application );
             Class<?> mLoadedApkClass = mLoadedApk.getClass();

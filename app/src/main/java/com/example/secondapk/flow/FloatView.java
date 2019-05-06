@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -288,6 +289,7 @@ public class FloatView implements IFloatUI, OnClickListener {
         if (mHideTimer != null) mHideTimer.start();
         updateViewPosition();
         if (xInScreen == xDownInScreen && yInScreen == yDownInScreen) {        //点击
+            Log.d( "dianji", "floatEventUp: " );
             PluginViewMgr.ShowPluginView();
         }
     }
@@ -301,14 +303,6 @@ public class FloatView implements IFloatUI, OnClickListener {
 
         rightIconIV = popMainView.findViewById( R.id.float_menu_right_iv );
         leftIconIV = popMainView.findViewById( R.id.float_menu_left_iv );
-//        /*个人中心*/
-//        TextView personalCenterTV = popMainView.findViewById( R.id.float_menu_personal_tv );
-//        /*礼包*/
-//        TextView giftTV = popMainView.findViewById( R.id.float_menu_gifts_tv );
-//        /*消息*/
-//        TextView noticeTV = popMainView.findViewById( R.id.xygame_float_menu_msg_tv );
-//        /*帮助*/
-//        TextView helpTV = popMainView.findViewById( R.id.float_menu_help_tv );
 
         rightIconIV.setOnClickListener( this );
         leftIconIV.setOnClickListener( this );

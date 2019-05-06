@@ -14,7 +14,7 @@ public class appjsondata {
     private  String returntype = "";
     private  String jobname ="";
     private boolean isshow =true;
-    public void AddjsonItem(JSONArray itemInfo) {
+    public synchronized void AddjsonItem(JSONArray itemInfo) {
         jsonlist.add( itemInfo );
     }
 
@@ -22,7 +22,7 @@ public class appjsondata {
         this.gammejosn = gammejosn;
     }
 
-    public JSONObject getGammejosn() {
+    public synchronized JSONObject getGammejosn() {
         return gammejosn;
     }
 
